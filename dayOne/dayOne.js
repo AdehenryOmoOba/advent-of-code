@@ -7,9 +7,8 @@ function readFileContent(filePath) {
             console.log(error.message)
             return error.message
         }
-       const newData = data.split("\n")
-      const {result, highest, highestIndex} = sumArray(newData)
-       console.log({result})
+       const array = data.split("\n")
+      const {highest, highestIndex} = sumArray(array)
        console.log({highest})
        console.log({highestIndex})
     })
@@ -33,7 +32,7 @@ function readFileContent(filePath) {
       let newItem = array[i].slice(0, -1)
       accumulator += Number(newItem)
     }
-    return {result, highest, highestIndex}
+    return {highest, highestIndex}
 }
 
  readFileContent("input.txt")
