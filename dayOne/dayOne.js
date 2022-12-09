@@ -1,24 +1,17 @@
-const fs = require("fs")
+const fileReader = require("../miscelleneous/fileReader")
 
 function readFileContent(filePath) {
 
-    fs.readFile(filePath, "utf-8", (error, data) => {
-        if (error) {
-            console.log(error.message)
-            return error.message
-        }
-       const array = data.split("\n")
-      const {resultArray,highest, highestIndex} = sumArray(array)
+  const array = fileReader(filePath)
+  const {resultArray,highest, highestIndex} = sumArray(array)
 
-       const topThree = resultArray.sort((a, b) => b - a).slice(0, 3)
-       let topThreeSum = 0
-       for (let num of topThree) topThreeSum += num
-       
-       console.log({highest})
-       console.log({highestIndex})
-       console.log({topThreeSum})
-
-    })
+   const topThree = resultArray.sort((a, b) => b - a).slice(0, 3)
+   let topThreeSum = 0
+   for (let num of topThree) topThreeSum += num
+   
+   console.log({highest})
+   console.log({highestIndex})
+   console.log({topThreeSum})
 }
 
    function sumArray(array) {

@@ -1,10 +1,10 @@
-const fs = require("fs")
+const { fileReader } = require("../miscelleneous/fileReader")
 
 const items = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 // function getDuplicates(filePath){
 
-//     const lines = fs.readFileSync(filePath, "utf-8").split("\n").slice(0, -1)
+//     const lines = fileReader(filePath)
 
 //     let result = 0
 
@@ -36,7 +36,7 @@ const items = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 function partTwo(filePath){
 
-  const lines = fs.readFileSync(filePath, "utf-8").split("\n").slice(0, -1)
+  const lines = fileReader(filePath)
 
   let result = []
 

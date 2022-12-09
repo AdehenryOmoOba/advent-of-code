@@ -2,6 +2,7 @@
 // B - paper         Y - draw
 // C - scissors      Z - win
 
+
 // weights:
 // rock     - 1
 // paper    - 2
@@ -19,16 +20,15 @@
 
 
 // Part One 
-
-// const fs = require("fs")
+const { fileReader } = require("../miscelleneous/fileReader");
 
 // function readFileContent(filePath) {
-
+    
 //     let result = 0
 
 //     const combinations = {AX: 4 , AY: 8 , AZ: 3 , BX: 1 , BY: 5 , BZ: 9 , CX: 7 , CY: 2 , CZ: 6}
 
-//     const lines = fs.readFileSync(filePath, "utf-8").split("\n")
+//    const lines = fileReader(filePath)
 
 //     for (let line of lines) {
 //        let newLine = line.slice(0, -1).replace(" ", "")
@@ -51,7 +51,7 @@
 
 //     const combinations = {AX: 3 , AY: 4 , AZ: 8 , BX: 1 , BY: 5 , BZ: 9 , CX: 2 , CY: 6 , CZ: 7}
 
-//     const lines = fs.readFileSync(filePath, "utf-8").split("\n")
+//     const lines = fileReader(filePath)
     
 
 //     for (let line of lines) {
