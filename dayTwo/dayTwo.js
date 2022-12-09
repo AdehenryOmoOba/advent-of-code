@@ -45,25 +45,25 @@
 // Part Two
 
 
-function readFileContent(filePath) {
+// function readFileContent(filePath) {
 
-    let result = 0
+//     let result = 0
 
-    const combinations = {AX: 3 , AY: 4 , AZ: 8 , BX: 1 , BY: 5 , BZ: 9 , CX: 2 , CY: 6 , CZ: 7}
+//     const combinations = {AX: 3 , AY: 4 , AZ: 8 , BX: 1 , BY: 5 , BZ: 9 , CX: 2 , CY: 6 , CZ: 7}
 
-    const lines = fs.readFileSync(filePath, "utf-8").split("\n")
+//     const lines = fs.readFileSync(filePath, "utf-8").split("\n")
     
 
-    for (let line of lines) {
-       let newLine = line.slice(0, -1).replace(" ", "")
-     if (newLine) result += combinations[newLine]
+//     for (let line of lines) {
+//        let newLine = line.slice(0, -1).replace(" ", "")
+//      if (newLine) result += combinations[newLine]
 
-    }
+//     }
     
-    console.log(result)
-}
+//     console.log(result)
+// }
 
-readFileContent("input.txt")
+// readFileContent("input.txt")
 
 // AX: lose {pick: scissors, score: 3} 
 // AY: draw {pick: rock, score: 4} 
