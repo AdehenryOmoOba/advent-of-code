@@ -34,7 +34,7 @@ const items = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 //////////////////////////////////////
 
 
-function getDuplicates(filePath){
+function partTwo(filePath){
 
   const lines = fs.readFileSync(filePath, "utf-8").split("\n").slice(0, -1)
 
@@ -59,8 +59,6 @@ function getDuplicates(filePath){
   let groupNumber = 1
 
   for (let group of result) {
-    // console.log({group})
-    // groups["group" + groupNumber] = {childOne: {}, childTwo:}
 
     let childOne = {}
     for (let char of group[0]){
@@ -80,16 +78,14 @@ function getDuplicates(filePath){
     groupNumber++
   }
 
-let prioritySum = 0
+  let prioritySum = 0
 
   for (let group in groups) {
 
-
-     
     for (let char in groups[group].childOne){
       if (char in groups[group].childTwo && char in groups[group].childThree){
-        console.log(char)
         prioritySum += items.indexOf(char) + 1
+        break
       }
     }
       
@@ -99,10 +95,4 @@ let prioritySum = 0
 
 }
 
-getDuplicates("input.txt")
-
-
-
-
-
-// group1 : {childOne: {}, childTwo: {}, childThree: {}}
+partTwo("input.txt")
