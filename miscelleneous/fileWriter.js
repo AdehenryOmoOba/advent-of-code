@@ -1,10 +1,13 @@
-// const fs = require("fs")
+const fs = require("fs")
 
-//  function fileWriter(data, filePath){
+ function fileWriter(data, append = false){
+    if (append){
+        fs.appendFileSync("../output.txt", data) 
+        console.log('appending...')
+    }else{
+        fs.writeFileSync("../output.txt", data)
+        console.log('writing...')
+    }
+}
 
-//     fs.writeFileSync()
-    
-//     return lines
-// }
-
-// module.exports = fileWriter
+module.exports = fileWriter

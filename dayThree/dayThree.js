@@ -1,4 +1,4 @@
-const { fileReader } = require("../miscelleneous/fileReader")
+const  fileReader  = require("../miscelleneous/fileReader")
 
 const items = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 

@@ -20,7 +20,7 @@
 
 
 // Part One 
-const { fileReader } = require("../miscelleneous/fileReader");
+const  fileReader  = require("../miscelleneous/fileReader");
 
 // function readFileContent(filePath) {
     

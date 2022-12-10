@@ -50,3 +50,32 @@ function shuffle(filePath) {
 ///////////////////
 
 // Part two 
+
+function shuffleBundle(filePath) {
+
+    let result = ""
+
+    const lines = fileReader(filePath)
+
+    for (let line of lines) {
+
+        const numbers = extractNumbers(line.slice(0, -1))
+        
+        let numberOfMoves = numbers[0]
+        let fromIndex = numbers[1] - 1
+        let toIndex = numbers[2] - 1
+ 
+        let item = stacks[fromIndex].splice(stacks[fromIndex].length - numberOfMoves)
+        stacks[toIndex] = [...stacks[toIndex], ...item]
+    
+    }
+
+    for (let stack of stacks){
+        result += stack.at(-1)
+    }
+
+    console.log(result)
+    return result
+}
+
+// shuffleBundle("input.txt")
