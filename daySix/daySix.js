@@ -1,5 +1,4 @@
 const  fileReader = require("../miscelleneous/fileReader")
-const   fileWriter = require("../miscelleneous/fileWriter")
 
 function getSubroutine(filePath) {
   
