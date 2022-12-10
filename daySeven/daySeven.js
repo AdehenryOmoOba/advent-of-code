@@ -76,37 +76,34 @@ function drawTreeRecursive(currentDirectory, instructionArray){
     let current = currentDirectory
     let instruction = instructionArray.splice(0, 1)
 
-    // console.log({instruction})
-
     if (instruction[0].startsWith("$ cd")){
       let instructionParts = instruction[0].split(" ")
 
       if(instructionParts[2] === "..") return
 
-      current = current[instructionParts[2]]
+      current = current['📁folder-' + instructionParts[2]]
 
       drawTreeRecursive(current, instructionArray)
     }
 
     if (instruction[0].startsWith("$ ls")){
 
-        // console.log({instructionArray})
-
         while (instructionArray[0].startsWith("dir") || /^\d/.test(instructionArray[0]) ) {
 
             let newInstruction = instructionArray.splice(0, 1)
             let instructionParts = newInstruction[0].split(" ")
-
-            console.log({current})
    
             if (instructionParts[0] === "dir") {
                 current["📁folder-" + instructionParts[1]] = {}
             }else{
               current["⬜file-" + instructionParts[1]] = instructionParts[0]
             }
-        }
 
+        }
+        
     }
+    console.log({testCurrent: current})
+    console.log({testInstructionArray: instructionArray})
 
     drawTreeRecursive(current, instructionArray)
 }
