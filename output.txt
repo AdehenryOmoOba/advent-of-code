@@ -1,0 +1,42 @@
+{
+   "root": {
+      "📁folder-cmwrq": {
+         "📁folder-dtbzzl": {
+            "⬜file-ljhpmvd.zqf": "42503",
+            "📁folder-wwpnn": {
+               "⬜file-jjdgzwnq": "58541",
+               "📁folder-lwqgsbg": {
+                  "⬜file-cpqhb.jsf": "207528",
+                  "⬜file-cqjgspw": "38543",
+                  "📁folder-dtbzzl": {
+                     "⬜file-vhvn.zqv": "252091"
+                  },
+                  "⬜file-dtbzzl.njz": "106337",
+                  "⬜file-pdv.ppg": "302201",
+                  "📁folder-pjts": {},
+                  "⬜file-pvczm.cfw": "175215",
+                  "📁folder-sbvljdh": {}
+               },
+               "📁folder-nztw": {},
+               "📁folder-rdtjztmt": {},
+               "⬜file-sqqpcvq.llm": "101609",
+               "📁folder-ssdlqcrw": {}
+            }
+         },
+         "📁folder-pjnghbm": {},
+         "⬜file-rvs": "16144",
+         "⬜file-swngfrsj.pcj": "50956",
+         "📁folder-vhvn": {},
+         "📁folder-vrt": {},
+         "📁folder-zgrjmtcq": {}
+      },
+      "📁folder-ftrccld": {},
+      "📁folder-jjlbmtw": {},
+      "📁folder-jpncfpb": {},
+      "📁folder-mddr": {},
+      "📁folder-mthvntdd": {},
+      "⬜file-pjts.dzh": "55644",
+      "📁folder-ptzsl": {},
+      "📁folder-wmqc": {}
+   }
+}

@@ -1,23 +1,48 @@
 $ cd /
 $ ls
-dir a
-14848514 b.txt
-8504156 c.dat
-dir d
-$ cd a
+dir cmwrq
+dir ftrccld
+dir jjlbmtw
+dir jpncfpb
+dir mddr
+dir mthvntdd
+55644 pjts.dzh
+dir ptzsl
+dir wmqc
+$ cd cmwrq
 $ ls
-dir e
-29116 f
-2557 g
-62596 h.lst
-$ cd e
+dir dtbzzl
+dir pjnghbm
+16144 rvs
+50956 swngfrsj.pcj
+dir vhvn
+dir vrt
+dir zgrjmtcq
+$ cd dtbzzl
 $ ls
-584 i
+42503 ljhpmvd.zqf
+dir wwpnn
+$ cd wwpnn
+$ ls
+58541 jjdgzwnq
+dir lwqgsbg
+dir nztw
+dir rdtjztmt
+101609 sqqpcvq.llm
+dir ssdlqcrw
+$ cd lwqgsbg
+$ ls
+207528 cpqhb.jsf
+38543 cqjgspw
+dir dtbzzl
+106337 dtbzzl.njz
+302201 pdv.ppg
+dir pjts
+175215 pvczm.cfw
+dir sbvljdh
+$ cd dtbzzl
+$ ls
+252091 vhvn.zqv
 $ cd ..
-$ cd ..
-$ cd d
+$ cd pjts
 $ ls
-4060174 j
-8033020 d.log
-5626152 d.ext
-7214296 k

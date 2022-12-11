@@ -1,60 +1,50 @@
-//  const root =  {
-//     "📁 a" : {
-//         "📁 e": {
-//             "📔 i" : "584", 
-//         },
-//         "📔 f" : "29116", 
-//         "📔 g" : "2557", 
-//         "📔 h.lst" : "62596", 
-//     },
-//     "📔 b.txt" : "14848514", 
-//     "📔 c.dat" : "14848514",
-//     "📁 d" : {
-//         "📔 j" : "4060174", 
-//         "📔 d.log" : "8033020", 
-//         "📔 d.ext" : "5626152", 
-//         "📔 k" : "7214296", 
-//     }
-// }
+const fs = require("fs")
+const fileReader = require("../miscelleneous/fileReader")
+const fileWriter = require("../miscelleneous/fileWriter")
 
 
-// $ cd /
-// $ ls
 
-// dir a
-// 14848514 b.txt
-// 8504156 c.dat
-// dir d
+function writeObject(directory, array){
 
-// $ cd a
-// $ ls
+  let childArray = array.slice()
 
-// dir e
-// 29116 f
-// 2557 g
-// 62596 h.lst
+  if (childArray[0]?.startsWith("$ ls")){
 
-// $ cd e
-// $ ls
+    childArray.splice(0, 1)
 
-// 584 i
+    while (childArray.length && childArray[0].startsWith("dir") || childArray.length && /^\d/.test(childArray[0]) ) {
+  
+      let newInstruction = childArray.splice(0, 1)
+      let instructionParts = newInstruction[0].split(" ")
+  
+      if (instructionParts[0] === "dir") {
+          directory["📁folder-" + instructionParts[1]] = {}
+      }else{
+        directory["⬜file-" + instructionParts[1]] = instructionParts[0]
+      }
+  
+    }
+  }
 
-// $ cd ..
-// $ cd ..
+      if (childArray.length && childArray[0].startsWith("$ cd")) {
+      
+      let instruction = childArray.splice(0, 1)
 
-// $ cd d
-// $ ls
+      let instructionParts = instruction[0].split(" ")
 
-// 4060174 j
-// 8033020 d.log
-// 5626152 d.ext 
-// 7214296 k
+      if(instructionParts[2] === "..") {
+        return {directory, childArray}
+        // return 
+      } else{
+         const result = writeObject(directory['📁folder-' + instructionParts[2]], childArray)
+         childArray = result.childArray
+      }
+    }
+  
+  return {directory, childArray}
+}
 
-const  fileReader = require("../miscelleneous/fileReader")
-const   fileWriter = require("../miscelleneous/fileWriter")
-
-
-function generateTree(filePath){
+function generateTree(filePath) {
 
     const lines = fileReader(filePath)
 
@@ -62,52 +52,21 @@ function generateTree(filePath){
 
     instructionArray  = instructionArray.splice(1)
 
-    const root = {}
+    let root = {}
 
-    drawTreeRecursive(root, instructionArray)
+   while(instructionArray.length){
 
-    return root
-}
+    const result = writeObject(root, instructionArray)
 
+    root = result.directory
 
+    instructionArray = [...result.childArray]
 
-function drawTreeRecursive(currentDirectory, instructionArray){
-   
-    let current = currentDirectory
-    let instruction = instructionArray.splice(0, 1)
+   }
 
-    if (instruction[0].startsWith("$ cd")){
-      let instructionParts = instruction[0].split(" ")
+    return {root, instructionArray}
+ } 
 
-      if(instructionParts[2] === "..") return
-
-      current = current['📁folder-' + instructionParts[2]]
-
-      drawTreeRecursive(current, instructionArray)
-    }
-
-    if (instruction[0].startsWith("$ ls")){
-
-        while (instructionArray[0].startsWith("dir") || /^\d/.test(instructionArray[0]) ) {
-
-            let newInstruction = instructionArray.splice(0, 1)
-            let instructionParts = newInstruction[0].split(" ")
-   
-            if (instructionParts[0] === "dir") {
-                current["📁folder-" + instructionParts[1]] = {}
-            }else{
-              current["⬜file-" + instructionParts[1]] = instructionParts[0]
-            }
-
-        }
-        
-    }
-    console.log({testCurrent: current})
-    console.log({testInstructionArray: instructionArray})
-
-    drawTreeRecursive(current, instructionArray)
-}
-
-const tree = generateTree("testInput.txt")
-
-console.log(tree)
+  const {root, instructionArray} = generateTree(`${__dirname}\\testInput.txt`)
+  console.log({root, instructionArray})
+  fileWriter(JSON.stringify({root}, null, 3))
