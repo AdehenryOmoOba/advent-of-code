@@ -60,5 +60,5 @@ function generateTree(filePath) {
     return directory
  } 
 
-  const rootFolder = generateTree(`${__dirname}\\input.txt`)
-  fileWriter(JSON.stringify({rootFolder}, null, 3))
+  const rootDirectory = generateTree(`${__dirname}\\input.txt`)
+  fileWriter(JSON.stringify({rootDirectory}, null, 3))
