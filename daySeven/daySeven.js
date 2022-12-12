@@ -97,9 +97,9 @@ function generateTree(filePath) {
  let directorySizeMap = {}
 
 
- function sumDirectorySizes(currentDirectoryKey, currentDirectory, stack, directorySizeMap) {
+ function sumDirectorySizes(currentDirectoryKey, currentDirectory, stack) {
 
-     stack.set(currentDirectoryKey, {parentKey: currentDirectoryKey, childValue: currentDirectory})
+     stack.set(currentDirectoryKey, {parentKey: "", childValue: currentDirectory})
 
     let allFolders = []
 
@@ -131,7 +131,7 @@ function generateTree(filePath) {
   console.log({allFolders})
  }
 
- sumDirectorySizes("📁folder-rootDirectory",rootDirectory, stack, directorySizeMap)
+ sumDirectorySizes("📁folder-rootDirectory",rootDirectory, stack)
 
 
 
