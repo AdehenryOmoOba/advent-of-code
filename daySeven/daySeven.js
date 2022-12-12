@@ -3,7 +3,6 @@ const fileReader = require("../miscelleneous/fileReader")
 const fileWriter = require("../miscelleneous/fileWriter")
 
 
-
 function writeObject(directory, array, stack){
 
   let childArray = array.slice()
@@ -22,9 +21,7 @@ function writeObject(directory, array, stack){
       }else{
         directory["⬜file-" + instructionParts[1]] = instructionParts[0]
       }
-  
     }
-
     stack.push(directory)
   }
 
