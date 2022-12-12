@@ -4,7 +4,7 @@ const fileWriter = require("../miscelleneous/fileWriter")
 
 
 
-function writeObject(directory, array){
+function writeObject(directory, array, stack){
 
   let childArray = array.slice()
 
@@ -24,6 +24,8 @@ function writeObject(directory, array){
       }
   
     }
+
+    stack.push(directory)
   }
 
       if (childArray.length && childArray[0].startsWith("$ cd")) {
@@ -33,15 +35,16 @@ function writeObject(directory, array){
       let instructionParts = instruction[0].split(" ")
 
       if(instructionParts[2] === "..") {
-        return {directory, childArray}
-        // return 
+        stack.pop()
+        const result = writeObject(stack[stack.length - 1]['📁folder-' + instructionParts[2]], childArray, stack)
+        childArray = result.childArray
+        stack = result.stack
       } else{
-         const result = writeObject(directory['📁folder-' + instructionParts[2]], childArray)
-         childArray = result.childArray
+        writeObject(stack[stack.length - 1]['📁folder-' + instructionParts[2]], childArray, stack)
       }
     }
   
-  return {directory, childArray}
+  return {directory ,childArray, stack}
 }
 
 function generateTree(filePath) {
@@ -54,19 +57,13 @@ function generateTree(filePath) {
 
     let root = {}
 
-   while(instructionArray.length){
+    let stack = [root]
 
-    const result = writeObject(root, instructionArray)
+    const result = writeObject(root, instructionArray, stack)
 
-    root = result.directory
-
-    instructionArray = [...result.childArray]
-
-   }
-
-    return {root, instructionArray}
+    return result.directory
  } 
 
-  const {root, instructionArray} = generateTree(`${__dirname}\\testInput.txt`)
-  console.log({root, instructionArray})
+  const root = generateTree(`${__dirname}\\testInput2.txt`)
+  console.log({root})
   fileWriter(JSON.stringify({root}, null, 3))
