@@ -33,14 +33,13 @@ function writeObject(directory, array, stack){
 
       if(instructionParts[2] === "..") {
         stack.pop()
-        const result = writeObject(stack[stack.length - 1]['📁folder-' + instructionParts[2]], childArray, stack)
+        const result = writeObject(stack[stack.length - 1], childArray, stack)
         childArray = result.childArray
         stack = result.stack
       } else{
         writeObject(stack[stack.length - 1]['📁folder-' + instructionParts[2]], childArray, stack)
       }
     }
-  
   return {directory ,childArray, stack}
 }
 
@@ -56,11 +55,10 @@ function generateTree(filePath) {
 
     let stack = [root]
 
-    const result = writeObject(root, instructionArray, stack)
+    const {directory} = writeObject(root, instructionArray, stack)
 
-    return result.directory
+    return directory
  } 
 
-  const root = generateTree(`${__dirname}\\testInput2.txt`)
-  console.log({root})
-  fileWriter(JSON.stringify({root}, null, 3))
+  const rootFolder = generateTree(`${__dirname}\\input.txt`)
+  fileWriter(JSON.stringify({rootFolder}, null, 3))
