@@ -1,141 +1,135 @@
-const fs = require("fs")
 const fileReader = require("../miscelleneous/fileReader")
 const fileWriter = require("../miscelleneous/fileWriter")
 
 
-function writeObject(directory, array, stack){
+// Generate tree
+class Node {
+  constructor(name) {
+      this.name = name
+      this.children = {}
+      this.size = 0
+      this.parent = null
+  }
+}
 
-  let childArray = array.slice()
+function drawTree(parentNode, array){
 
-  if (childArray[0]?.startsWith("$ ls")){
+    if (!array.length) return
 
-    childArray.splice(0, 1)
+    if (array[0].startsWith("$ ls")){
 
-    while (childArray.length && childArray[0].startsWith("dir") || childArray.length && /^\d/.test(childArray[0]) ) {
-  
-      let newInstruction = childArray.splice(0, 1)
-      let instructionParts = newInstruction[0].split(" ")
-  
+      array.shift()
+
+      while (array.length && array[0].startsWith("dir") || array.length && /^\d/.test(array[0]) ) {
+
+      let currentInstruction = array.shift()
+
+      let instructionParts = currentInstruction.split(" ")
+
       if (instructionParts[0] === "dir") {
-          directory["📁folder-" + instructionParts[1]] = {}
+          let node = new Node(instructionParts[1])
+          node.parent = parentNode
+          parentNode.children = {...parentNode.children, [instructionParts[1]]: node}
       }else{
-        directory["⬜file-" + instructionParts[1]] = instructionParts[0]
+        parentNode.children[instructionParts[1]] = Number(instructionParts[0])
+        parentNode.size += Number(instructionParts[0])
       }
     }
-    stack.push(directory)
+
   }
 
-      if (childArray.length && childArray[0].startsWith("$ cd")) {
+    if (array.length && array[0].startsWith("$ cd")) {
       
-      let instruction = childArray.splice(0, 1)
+      let currentInstruction = array.shift()
 
-      let instructionParts = instruction[0].split(" ")
+      let instructionParts = currentInstruction.split(" ")
 
       if(instructionParts[2] === "..") {
-        stack.pop()
-        const result = writeObject(stack[stack.length - 1], childArray, stack)
-        childArray = result.childArray
-        stack = result.stack
-      } else{
-        writeObject(stack[stack.length - 1]['📁folder-' + instructionParts[2]], childArray, stack)
+        drawTree(parentNode.parent, array)
+      } else{  
+        let childNode = parentNode.children[instructionParts[2]]
+        drawTree(childNode, array)
       }
     }
-  return {directory ,childArray, stack}
+
+       return 
 }
 
 function generateTree(filePath) {
 
     const lines = fileReader(filePath)
-
+    
     let instructionArray = lines.map((line) => line.slice(0, -1))
 
     instructionArray  = instructionArray.splice(1)
+    
+    let rootNode = new Node("root")
 
-    let root = {}
+    drawTree(rootNode, instructionArray)
 
-    let stack = [root]
-
-    const {directory} = writeObject(root, instructionArray, stack)
-
-    return directory
+    return rootNode
  } 
 
-  const rootDirectory = generateTree(`${__dirname}\\testInput.txt`)
-  // fileWriter(JSON.stringify({rootDirectory}, null, 3))
-
-//   let dir = {
-//     "📁folder-rootDirectory": {
-//        "📁folder-a": {
-//           "📁folder-e": {
-//              "⬜file-i": "584"
-//           },
-//           "⬜file-f": "29116",
-//           "⬜file-g": "2557",
-//           "⬜file-h.lst": "62596"
-//        },
-//        "⬜file-b.txt": "14848514",
-//        "⬜file-c.dat": "8504156",
-//        "📁folder-d": {
-//           "⬜file-j": "4060174",
-//           "⬜file-d.log": "8033020",
-//           "⬜file-d.ext": "5626152",
-//           "⬜file-k": "7214296"
-//        }
-//     },
-//     "⬜file-test": "29116"
-//  }
-
- //rootDirectory : 48410281
- //📁folder-rootDirectory : 48381165
- //📁folder-a  : 94853 //
-//📁folder-d : 24933642
-//📁folder-e : 584 //
-
-
-
- let stack = new Map()
- let directorySizeMap = {}
-
-
- function sumDirectorySizes(currentDirectoryKey, currentDirectory, stack) {
-
-     stack.set(currentDirectoryKey, {parentKey: "", childValue: currentDirectory})
-
-    let allFolders = []
-
-    while(stack.size){
-      
-      let currentKey = [...stack.keys()].at(-1)
-      
-      let currentValue = stack.get(currentKey)
-      
-      let currentSize = 0
-      
-      for (let item in currentValue.childValue){
-        if (item.startsWith('⬜file')) {
-          currentSize += Number(currentValue.childValue[item])
-        }
-      }
-      
-      allFolders.push({[currentKey]: currentSize, parent: currentValue.parentKey})
-   
-     stack.delete(currentKey)
-
-    for (let item in currentValue.childValue){
-      if (item.startsWith('📁folder')) {
-        stack.set(item, {parentKey: currentKey, childValue: currentValue.childValue[item]})
-      }
-   }
-  }
-
-  console.log({allFolders})
- }
-
- sumDirectorySizes("📁folder-rootDirectory",rootDirectory, stack)
-
-
-
+ const tree =  generateTree(`${__dirname}\\input.txt`)
+  // fileWriter(JSON.stringify({tree}, null, 3), "append")
  
 
+ // Trverse Tree
+ function queueFolders(root) {
+  let current = root
+  let currentIndex = null
 
+  let directories = []
+
+  do {
+      
+      if(!current) break
+
+      for (let child in current.children){
+          if (typeof current.children[child] !== "number") directories.push(current.children[child])
+      }
+      
+      if(currentIndex === null){
+          currentIndex = 0
+      }else{
+          currentIndex++
+      }
+
+      current = directories[currentIndex]
+      
+  } while (true);
+
+  return directories
+}
+
+function selectDirectroies(directories){
+
+  let updatedArray = []
+  let sum = 0
+
+  while(directories.length){
+      let currentNode = directories.pop()
+      currentNode.parent.size += currentNode.size
+      updatedArray.push(currentNode)
+  }
+
+  for (let item of updatedArray){
+     if(item.size <= 100000) sum += item.size
+  }
+
+  return sum
+   
+}
+
+ function getFileSize(root){
+
+  let directories = queueFolders(root)
+
+  let result =  selectDirectroies(directories)
+
+  console.log(result)
+
+}
+
+getFileSize(tree)
 

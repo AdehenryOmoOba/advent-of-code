@@ -5,7 +5,7 @@ const fs = require("fs")
         fs.appendFileSync("../output.txt", data) 
         console.log('appending...')
     }else{
-        fs.writeFileSync("../output.json", data)
+        fs.writeFileSync("../output.txt", data)
         console.log('writing...')
     }
 }
