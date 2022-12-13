@@ -1,8 +1,8 @@
 const fileReader = require("../miscelleneous/fileReader")
-const fileWriter = require("../miscelleneous/fileWriter")
+// const fileWriter = require("../miscelleneous/fileWriter")
 
 
-// Generate tree
+// Generate Tree
 class Node {
   constructor(name) {
       this.name = name
@@ -16,7 +16,7 @@ function drawTree(parentNode, array){
 
     if (!array.length) return
 
-    if (array[0].startsWith("$ ls")){
+    if (array[0].startsWith("$ ls")) {
 
       array.shift()
 
@@ -52,15 +52,15 @@ function drawTree(parentNode, array){
       }
     }
 
-       return 
+   return 
 }
 
-function generateTree(filePath) {
+function generateTree() {
 
-    const lines = fileReader(filePath)
-    
-    let instructionArray = lines.map((line) => line.slice(0, -1))
+    let instructionArray = fileReader(`${__dirname}\\input.txt`)
 
+    instructionArray = instructionArray.map((item) => item.slice(0, -1))
+      
     instructionArray  = instructionArray.splice(1)
     
     let rootNode = new Node("root")
@@ -70,12 +70,11 @@ function generateTree(filePath) {
     return rootNode
  } 
 
- const tree =  generateTree(`${__dirname}\\input.txt`)
-  // fileWriter(JSON.stringify({tree}, null, 3), "append")
- 
+const tree =  generateTree()
 
- // Trverse Tree
- function queueFolders(root) {
+
+// Traverse Tree
+function queueFolders(root) {
   let current = root
   let currentIndex = null
 
@@ -117,19 +116,48 @@ function selectDirectroies(directories){
      if(item.size <= 100000) sum += item.size
   }
 
-  return sum
+  return {sum, updatedArray}
    
 }
 
- function getFileSize(root){
 
-  let directories = queueFolders(root)
+// Free up space
+function freeUpSpaces(directories, sizeNeeded){
 
-  let result =  selectDirectroies(directories)
+  let directoryToBeDeleted;
 
-  console.log(result)
+  let sorted = directories.sort((a, b) => a.size - b.size )
+
+  for (let directory of sorted){
+    if (directory.size > sizeNeeded) {
+      directoryToBeDeleted = directory
+      break
+    }
+  }
+  
+  return directoryToBeDeleted
 
 }
 
-getFileSize(tree)
+function getFileSize(root){
+
+  let directories = queueFolders(root)
+
+  let {sum, updatedArray} =  selectDirectroies(directories)
+
+  // As per instruction
+  let sizeNeeded = 2_805_968
+
+  let directoryToBeDeleted =  freeUpSpaces(updatedArray, sizeNeeded)
+
+  return {root, directoryToBeDeleted}
+}
+
+const {root, directoryToBeDeleted} = getFileSize(tree)
+console.log({directoryToBeDeleted})
+console.log({root})
+
+// system size = 70_000_000 
+// rootDirectory size = 42_805_968
+// size needed = 2_805_968
 
