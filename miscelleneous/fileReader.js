@@ -1,7 +1,7 @@
 const fs = require("fs")
 
 function fileReader(filePath){
-    const lines = fs.readFileSync(filePath, "utf-8").split("\n").slice(0, -1)
+    const lines = fs.readFileSync(filePath,{encoding:"utf-8"}).replace(/\r/g, "").trim().split("\n")
     return lines
 }
 
