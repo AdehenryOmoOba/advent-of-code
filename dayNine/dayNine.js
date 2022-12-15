@@ -12,10 +12,10 @@ class Knot {
       this.name = name,
       this.currentCoord = null,
       this.coordRecord = new Set()
-      this.updateCoordRecord(x, y)
+      this.updateCoordinates(x, y)
     }
 
-    updateCoordRecord(x, y){
+    updateCoordinates(x, y){
         this.currentCoord =  {x: x, y: y}
         this.coordRecord.add(`x:${x},y:${y}`)
     }
@@ -31,25 +31,25 @@ function move(moveInstruction){
         // increment on y and x axis
         let newX = ++x
         let newY = ++y
-        tail.updateCoordRecord(newX, newY)
+        tail.updateCoordinates(newX, newY)
     }
     function diagonalUL(x, y) {
         // increment on y axis and decrement on x axis
           let newX = --x
           let newY = ++y
-          tail.updateCoordRecord(newX, newY)
+          tail.updateCoordinates(newX, newY)
     }
     function diagonalDR(x, y) {
         // decrement on y axis and increment on x axis
           let newX = ++x
           let newY = --y
-          tail.updateCoordRecord(newX, newY)
+          tail.updateCoordinates(newX, newY)
     }
     function diagonalDL(x, y) {
         // decrement on y and x axis
           let newX = --x
           let newY = --y
-          tail.updateCoordRecord(newX, newY)
+          tail.updateCoordinates(newX, newY)
     }
 
 
@@ -67,7 +67,7 @@ function move(moveInstruction){
             let headCurrentX = head.currentCoord.x
             let headCurrentY = head.currentCoord.y
             let headNewX = ++headCurrentX
-            head.updateCoordRecord(headNewX, headCurrentY)
+            head.updateCoordinates(headNewX, headCurrentY)
 
             // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
             if(headNewX - tail.currentCoord.x > 1){
@@ -91,7 +91,7 @@ function move(moveInstruction){
                 let tailCurrentX = tail.currentCoord.x
                 let tailCurrentY = tail.currentCoord.y
                 let tailNewX = ++tailCurrentX
-                tail.updateCoordRecord(tailNewX, tailCurrentY)
+                tail.updateCoordinates(tailNewX, tailCurrentY)
                 }
             }
             moveCount++
@@ -104,7 +104,7 @@ function move(moveInstruction){
             let headCurrentX = head.currentCoord.x
             let headCurrentY = head.currentCoord.y
             let headNewX = --headCurrentX
-            head.updateCoordRecord(headNewX, headCurrentY)
+            head.updateCoordinates(headNewX, headCurrentY)
 
             // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
             if(Math.abs(headNewX - tail.currentCoord.x) > 1){
@@ -129,7 +129,7 @@ function move(moveInstruction){
                 let tailCurrentX = tail.currentCoord.x
                 let tailCurrentY = tail.currentCoord.y
                 let tailNewX = --tailCurrentX
-                tail.updateCoordRecord(tailNewX, tailCurrentY)
+                tail.updateCoordinates(tailNewX, tailCurrentY)
                 }
             }
             moveCount++
@@ -142,7 +142,7 @@ function move(moveInstruction){
             let headCurrentX = head.currentCoord.x
             let headCurrentY = head.currentCoord.y
             let headNewY = ++headCurrentY
-            head.updateCoordRecord(headCurrentX, headNewY)
+            head.updateCoordinates(headCurrentX, headNewY)
 
             // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
             if(headNewY - tail.currentCoord.y > 1){
@@ -165,7 +165,7 @@ function move(moveInstruction){
                  let tailCurrentX = tail.currentCoord.x
                  let tailCurrentY = tail.currentCoord.y
                  let tailNewY = ++tailCurrentY
-                 tail.updateCoordRecord(tailCurrentX, tailNewY)
+                 tail.updateCoordinates(tailCurrentX, tailNewY)
                 }
             }
             moveCount++
@@ -178,7 +178,7 @@ function move(moveInstruction){
             let headCurrentX = head.currentCoord.x
             let headCurrentY = head.currentCoord.y
             let headNewY = --headCurrentY
-            head.updateCoordRecord(headCurrentX, headNewY)
+            head.updateCoordinates(headCurrentX, headNewY)
 
             // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
             if(Math.abs(headNewY - tail.currentCoord.y) > 1){
@@ -202,7 +202,7 @@ function move(moveInstruction){
                     let tailCurrentX = tail.currentCoord.x
                     let tailCurrentY = tail.currentCoord.y
                     let tailNewY = --tailCurrentY
-                    tail.updateCoordRecord(tailCurrentX, tailNewY)
+                    tail.updateCoordinates(tailCurrentX, tailNewY)
                 }
             }
             moveCount++
