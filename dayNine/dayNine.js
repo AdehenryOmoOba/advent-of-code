@@ -10,7 +10,7 @@ let instructionArray = lines.map((line) => {
 class Knot {
     constructor(name, x, y){
       this.name = name,
-      this.currentCoord = {x: x, y: y},
+      this.currentCoord = null,
       this.coordRecord = new Set()
       this.updateCoordRecord(x, y)
     }
