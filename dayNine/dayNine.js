@@ -64,32 +64,32 @@ function move(moveInstruction){
     // move right
     if(moveInstruction.direction === "R"){
     while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = parseInt(head.currentCoord.x)
-            let headCurrentY = parseInt(head.currentCoord.y)
+            let headCurrentX = head.currentCoord.x
+            let headCurrentY = head.currentCoord.y
             let headNewX = ++headCurrentX
             head.updateCoordRecord(headNewX, headCurrentY)
 
             // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
-            if(headNewX - parseInt(tail.currentCoord.x) > 1){
+            if(headNewX - tail.currentCoord.x > 1){
 
-                if(Math.abs(headNewX - parseInt(tail.currentCoord.x)) + Math.abs(headCurrentY - parseInt(tail.currentCoord.y)) > 2){
-                    if(parseInt(head.currentCoord.x) > parseInt(tail.currentCoord.x)) {
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                if(Math.abs(headNewX - tail.currentCoord.x) + Math.abs(headCurrentY - tail.currentCoord.y) > 2){
+                    if(head.currentCoord.x > tail.currentCoord.x) {
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }else{
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }
 
                 }else{
-                let tailCurrentX = parseInt(tail.currentCoord.x)
-                let tailCurrentY = parseInt(tail.currentCoord.y)
+                let tailCurrentX = tail.currentCoord.x
+                let tailCurrentY = tail.currentCoord.y
                 let tailNewX = ++tailCurrentX
                 tail.updateCoordRecord(tailNewX, tailCurrentY)
                 }
@@ -101,33 +101,33 @@ function move(moveInstruction){
     // move left
     if(moveInstruction.direction === "L"){
     while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = parseInt(head.currentCoord.x)
-            let headCurrentY = parseInt(head.currentCoord.y)
+            let headCurrentX = head.currentCoord.x
+            let headCurrentY = head.currentCoord.y
             let headNewX = --headCurrentX
             head.updateCoordRecord(headNewX, headCurrentY)
 
             // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
-            if(Math.abs(headNewX - parseInt(tail.currentCoord.x)) > 1){
+            if(Math.abs(headNewX - tail.currentCoord.x) > 1){
 
-                if(Math.abs(headNewX - parseInt(tail.currentCoord.x)) + Math.abs(headCurrentY - parseInt(tail.currentCoord.y)) > 2){
-                    if(parseInt(head.currentCoord.x) > parseInt(tail.currentCoord.x)) {
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                if(Math.abs(headNewX - tail.currentCoord.x) + Math.abs(headCurrentY - tail.currentCoord.y) > 2){
+                    if(head.currentCoord.x > tail.currentCoord.x) {
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }else{
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }
 
                 }else{
                     
-                let tailCurrentX = parseInt(tail.currentCoord.x)
-                let tailCurrentY = parseInt(tail.currentCoord.y)
+                let tailCurrentX = tail.currentCoord.x
+                let tailCurrentY = tail.currentCoord.y
                 let tailNewX = --tailCurrentX
                 tail.updateCoordRecord(tailNewX, tailCurrentY)
                 }
@@ -139,31 +139,31 @@ function move(moveInstruction){
     // move up
     if(moveInstruction.direction === "U"){
     while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = parseInt(head.currentCoord.x)
-            let headCurrentY = parseInt(head.currentCoord.y)
+            let headCurrentX = head.currentCoord.x
+            let headCurrentY = head.currentCoord.y
             let headNewY = ++headCurrentY
             head.updateCoordRecord(headCurrentX, headNewY)
 
             // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
-            if(headNewY - parseInt(tail.currentCoord.y) > 1){
-                if(Math.abs(headNewY - parseInt(tail.currentCoord.y)) + Math.abs(headCurrentX - parseInt(tail.currentCoord.x)) > 2){
-                    if(parseInt(head.currentCoord.x) > parseInt(tail.currentCoord.x)) {
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+            if(headNewY - tail.currentCoord.y > 1){
+                if(Math.abs(headNewY - tail.currentCoord.y) + Math.abs(headCurrentX - tail.currentCoord.x) > 2){
+                    if(head.currentCoord.x > tail.currentCoord.x) {
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }else{
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }
 
                 }else{
-                 let tailCurrentX = parseInt(tail.currentCoord.x)
-                 let tailCurrentY = parseInt(tail.currentCoord.y)
+                 let tailCurrentX = tail.currentCoord.x
+                 let tailCurrentY = tail.currentCoord.y
                  let tailNewY = ++tailCurrentY
                  tail.updateCoordRecord(tailCurrentX, tailNewY)
                 }
@@ -175,32 +175,32 @@ function move(moveInstruction){
     // move down
     if(moveInstruction.direction === "D"){
     while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = parseInt(head.currentCoord.x)
-            let headCurrentY = parseInt(head.currentCoord.y)
+            let headCurrentX = head.currentCoord.x
+            let headCurrentY = head.currentCoord.y
             let headNewY = --headCurrentY
             head.updateCoordRecord(headCurrentX, headNewY)
 
             // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
-            if(Math.abs(headNewY - parseInt(tail.currentCoord.y)) > 1){
+            if(Math.abs(headNewY - tail.currentCoord.y) > 1){
 
-                if(Math.abs(headCurrentX - parseInt(tail.currentCoord.x)) + Math.abs(headNewY - parseInt(tail.currentCoord.y)) > 2){
-                    if(parseInt(head.currentCoord.x) > parseInt(tail.currentCoord.x)) {
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                if(Math.abs(headCurrentX - tail.currentCoord.x) + Math.abs(headNewY - tail.currentCoord.y) > 2){
+                    if(head.currentCoord.x > tail.currentCoord.x) {
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDR(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }else{
-                        if(parseInt(head.currentCoord.y) > parseInt(tail.currentCoord.y)){
-                            diagonalUL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                        if(head.currentCoord.y > tail.currentCoord.y){
+                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
                         }else{
-                            diagonalDL(parseInt(tail.currentCoord.x),parseInt(tail.currentCoord.y))
+                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
                         }
                     }
 
                 }else{
-                    let tailCurrentX = parseInt(tail.currentCoord.x)
-                    let tailCurrentY = parseInt(tail.currentCoord.y)
+                    let tailCurrentX = tail.currentCoord.x
+                    let tailCurrentY = tail.currentCoord.y
                     let tailNewY = --tailCurrentY
                     tail.updateCoordRecord(tailCurrentX, tailNewY)
                 }
