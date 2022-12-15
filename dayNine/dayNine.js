@@ -218,6 +218,3 @@ while (callCount < instructionArray.length) {
 }
 
 console.log(tail.coordRecord.size)
-
-
-
