@@ -64,7 +64,6 @@ function move(moveInstruction) {
   }
 }
 
-
 for (let instructionIndex = 0; instructionIndex < instructionArray.length; instructionIndex++) {
    move(instructionArray[instructionIndex])
 }
@@ -105,10 +104,12 @@ function moveSnake(knotsArray, moveInstruction){
   
       let move = movesDefinition[moveInstruction.direction]
   
+      // move head 
       head2.coord.x += move.x
   
       head2.coord.y += move.y
   
+      // move rest of the body
       for (let knotIndex = 1; knotIndex < knotsArray.length; knotIndex++) {
   
         let  prevKnotCoord = knotsArray[knotIndex - 1].coord
