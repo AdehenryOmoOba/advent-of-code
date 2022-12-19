@@ -52,13 +52,6 @@ function move(moveInstruction){
           tail.updateCoordinates(newX, newY)
     }
 
-
-    // if moveInstruction.direction === "R", increment 'x' by moveInstruction.numberOfMoves
-    // if moveInstruction.direction === "L", decrement 'x' by moveInstruction.numberOfMoves
-    
-    // if moveInstruction.direction === "U", increment 'y' by moveInstruction.numberOfMoves
-    // if moveInstruction.direction === "D", decrement 'y' by moveInstruction.numberOfMoves
-
     let moveCount = 0
 
     // move right
@@ -218,3 +211,6 @@ while (callCount < instructionArray.length) {
 }
 
 console.log(tail.coordRecord.size)
+
+///////////////////// Part Two ////////////////////////////
+
