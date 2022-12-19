@@ -7,17 +7,23 @@ let instructionArray = lines.map((line) => {
     return {direction: newLine[0], numberOfMoves: Number(newLine[1])}
 })
 
+const movesDefinition = {
+  R: { x: 1, y: 0},
+  L: { x: -1, y: 0},
+  U: {x: 0, y: 1}, 
+  D: { x: 0, y: -1}
+}
+
 class Knot {
     constructor(name, x, y){
       this.name = name,
-      this.currentCoord = null,
+      this.coord = {x: x, y: y},
       this.coordRecord = new Set()
-      this.updateCoordinates(x, y)
+      this.addCoord(x, y)
     }
 
-    updateCoordinates(x, y){
-        this.currentCoord =  {x: x, y: y}
-        this.coordRecord.add(`x:${x},y:${y}`)
+    addCoord(x, y){
+        this.coordRecord.add(`x:${x}, y:${y}`)
     }
 }
 
@@ -25,192 +31,112 @@ let head = new Knot("H", 0, 0)
 let tail = new Knot("T", 0, 0)
 
 
-function move(moveInstruction){
+function move(moveInstruction) {
 
-    function diagonalUR(x, y) {
-        // increment on y and x axis
-        let newX = ++x
-        let newY = ++y
-        tail.updateCoordinates(newX, newY)
+  for (let numOfMovesIndex = 0; numOfMovesIndex < moveInstruction.numberOfMoves; numOfMovesIndex++) {
+  
+    let move = movesDefinition[moveInstruction.direction]
+  
+    // move head
+    head.coord.x += move.x
+  
+    head.coord.y += move.y
+  
+    // move tail
+    let xDiff = head.coord.x - tail.coord.x
+  
+    let yDiff = head.coord.y - tail.coord.y
+  
+    let maxDiff = Math.max(Math.abs(xDiff), Math.abs(yDiff))
+  
+    if(maxDiff > 1){    
+  
+      let newX = Math.abs(xDiff) === 2 ? xDiff / 2 : xDiff
+  
+      let newY = Math.abs(yDiff) === 2 ? yDiff / 2 : yDiff
+          
+      tail.coord.x += newX
+  
+      tail.coord.y += newY
+  
     }
-    function diagonalUL(x, y) {
-        // increment on y axis and decrement on x axis
-          let newX = --x
-          let newY = ++y
-          tail.updateCoordinates(newX, newY)
-    }
-    function diagonalDR(x, y) {
-        // decrement on y axis and increment on x axis
-          let newX = ++x
-          let newY = --y
-          tail.updateCoordinates(newX, newY)
-    }
-    function diagonalDL(x, y) {
-        // decrement on y and x axis
-          let newX = --x
-          let newY = --y
-          tail.updateCoordinates(newX, newY)
-    }
-
-    let moveCount = 0
-
-    // move right
-    if(moveInstruction.direction === "R"){
-    while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = head.currentCoord.x
-            let headCurrentY = head.currentCoord.y
-            let headNewX = ++headCurrentX
-            head.updateCoordinates(headNewX, headCurrentY)
-
-            // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
-            if(headNewX - tail.currentCoord.x > 1){
-
-                if(Math.abs(headNewX - tail.currentCoord.x) + Math.abs(headCurrentY - tail.currentCoord.y) > 2){
-                    if(head.currentCoord.x > tail.currentCoord.x) {
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }else{
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }
-
-                }else{
-                let tailCurrentX = tail.currentCoord.x
-                let tailCurrentY = tail.currentCoord.y
-                let tailNewX = ++tailCurrentX
-                tail.updateCoordinates(tailNewX, tailCurrentY)
-                }
-            }
-            moveCount++
-        }
-    }
-
-    // move left
-    if(moveInstruction.direction === "L"){
-    while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = head.currentCoord.x
-            let headCurrentY = head.currentCoord.y
-            let headNewX = --headCurrentX
-            head.updateCoordinates(headNewX, headCurrentY)
-
-            // chech distance of head from tail on x axis, if it is > 1, move tail closer by 1 step
-            if(Math.abs(headNewX - tail.currentCoord.x) > 1){
-
-                if(Math.abs(headNewX - tail.currentCoord.x) + Math.abs(headCurrentY - tail.currentCoord.y) > 2){
-                    if(head.currentCoord.x > tail.currentCoord.x) {
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }else{
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }
-
-                }else{
-                    
-                let tailCurrentX = tail.currentCoord.x
-                let tailCurrentY = tail.currentCoord.y
-                let tailNewX = --tailCurrentX
-                tail.updateCoordinates(tailNewX, tailCurrentY)
-                }
-            }
-            moveCount++
-        }
-    }
-
-    // move up
-    if(moveInstruction.direction === "U"){
-    while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = head.currentCoord.x
-            let headCurrentY = head.currentCoord.y
-            let headNewY = ++headCurrentY
-            head.updateCoordinates(headCurrentX, headNewY)
-
-            // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
-            if(headNewY - tail.currentCoord.y > 1){
-                if(Math.abs(headNewY - tail.currentCoord.y) + Math.abs(headCurrentX - tail.currentCoord.x) > 2){
-                    if(head.currentCoord.x > tail.currentCoord.x) {
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }else{
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }
-
-                }else{
-                 let tailCurrentX = tail.currentCoord.x
-                 let tailCurrentY = tail.currentCoord.y
-                 let tailNewY = ++tailCurrentY
-                 tail.updateCoordinates(tailCurrentX, tailNewY)
-                }
-            }
-            moveCount++
-        }
-    }
-
-    // move down
-    if(moveInstruction.direction === "D"){
-    while (moveCount < moveInstruction.numberOfMoves) {
-            let headCurrentX = head.currentCoord.x
-            let headCurrentY = head.currentCoord.y
-            let headNewY = --headCurrentY
-            head.updateCoordinates(headCurrentX, headNewY)
-
-            // chech distance of head from tail on y axis, if it is > 1, move tail closer by 1 step
-            if(Math.abs(headNewY - tail.currentCoord.y) > 1){
-
-                if(Math.abs(headCurrentX - tail.currentCoord.x) + Math.abs(headNewY - tail.currentCoord.y) > 2){
-                    if(head.currentCoord.x > tail.currentCoord.x) {
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUR(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDR(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }else{
-                        if(head.currentCoord.y > tail.currentCoord.y){
-                            diagonalUL(tail.currentCoord.x,tail.currentCoord.y)
-                        }else{
-                            diagonalDL(tail.currentCoord.x,tail.currentCoord.y)
-                        }
-                    }
-
-                }else{
-                    let tailCurrentX = tail.currentCoord.x
-                    let tailCurrentY = tail.currentCoord.y
-                    let tailNewY = --tailCurrentY
-                    tail.updateCoordinates(tailCurrentX, tailNewY)
-                }
-            }
-            moveCount++
-        }
-    }
+    tail.addCoord(tail.coord.x, tail.coord.y)
+  }
 }
 
-let callCount = 0
 
-while (callCount < instructionArray.length) {
-    move(instructionArray[callCount])
-    callCount++
+for (let instructionIndex = 0; instructionIndex < instructionArray.length; instructionIndex++) {
+   move(instructionArray[instructionIndex])
 }
 
 console.log(tail.coordRecord.size)
 
 ///////////////////// Part Two ////////////////////////////
 
+class Knot2 {
+    constructor(name, x, y){
+      this.name = name,
+      this.coord = {x: x, y: y},
+      this.coordRecord = new Set()
+      this.addCoord(x, y)
+    }
+
+    addCoord(x, y){
+        this.coordRecord.add(`x:${x}, y:${y}`)
+    }
+}
+
+let head2 = new Knot2("H", 0, 0)
+let b1 = new Knot2("B", 0, 0)
+let b2 = new Knot2("b2", 0, 0)
+let b3 = new Knot2("b3", 0, 0)
+let b4 = new Knot2("b4", 0, 0)
+let b5 = new Knot2("b5", 0, 0)
+let b6 = new Knot2("b6", 0, 0)
+let b7 = new Knot2("b7", 0, 0)
+let b8 = new Knot2("b8", 0, 0)
+let tail2 = new Knot2("T", 0, 0)
+
+const knotsArray = [head2,b1,b2,b3,b4,b5,b6,b7,b8,tail2]
+
+function moveSnake(knotsArray, moveInstruction){
+
+    for (let numOfMovesIndex = 0; numOfMovesIndex < moveInstruction.numberOfMoves; numOfMovesIndex++) {
+  
+      let move = movesDefinition[moveInstruction.direction]
+  
+      head2.coord.x += move.x
+  
+      head2.coord.y += move.y
+  
+      for (let knotIndex = 1; knotIndex < knotsArray.length; knotIndex++) {
+  
+        let  prevKnotCoord = knotsArray[knotIndex - 1].coord
+  
+        let xDiff = prevKnotCoord.x - knotsArray[knotIndex].coord.x
+  
+        let yDiff = prevKnotCoord.y - knotsArray[knotIndex].coord.y
+  
+        let maxDiff = Math.max(Math.abs(xDiff), Math.abs(yDiff))
+  
+        if(maxDiff > 1){    
+  
+          let newX = Math.abs(xDiff) === 2 ? xDiff / 2 : xDiff
+  
+          let newY = Math.abs(yDiff) === 2 ? yDiff / 2 : yDiff
+          
+          knotsArray[knotIndex].coord.x += newX
+  
+          knotsArray[knotIndex].coord.y += newY
+  
+        }
+      }
+      tail2.addCoord(tail2.coord.x, tail2.coord.y)
+  }
+}
+
+for (let instructionIndex = 0; instructionIndex < instructionArray.length; instructionIndex++) {
+  moveSnake(knotsArray, instructionArray[instructionIndex])
+}
+
+ console.log("tail ",tail2.coordRecord.size)
