@@ -33,7 +33,7 @@ function getSignalSum(instructionArray){
     x += instruction.x
 
   }else{
-    
+
     cycleCount++
     if(checkCycle(cycleCount)) signalStrengthSum += cycleCount * x
 
