@@ -117,57 +117,19 @@ function compare(a, b){
 
 let allPairs = []
 
-function findorder(array) {
-
-  let min = {item: array[0], index: 0}
-
-  for (let i = 1; i < array.length; i++) {
-    
-    for (let pairIndex = 0; pairIndex < Math.max(min.item.length, array[i].length); pairIndex++) {
-  
-      let result = compare(min.item[pairIndex], array[i][pairIndex])
-  
-      if(result === 1){
-        break
-      }
-  
-      if(result === -1){
-        min = {item: allPairs[i], index: i}
-        break
-      }
-    }
-    
-  }
-  return min
-}
-
-for (const pair of pairs) {
-  allPairs.push(pair[0])
-  allPairs.push(pair[1])
-}
-
-allPairs = [...allPairs, [[2]], [[6]]]
-
-let sorted = []
-
-function findMin(array) {
-
-  if(array.length === 1) return sorted.push(array)
-
-   let smallest =  findorder(array)
-   sorted.push(smallest.item)
-   allPairs.splice(smallest.index, 1)
-}
-
-// let allPairsLength = allPairs.length
-// for (let allPairsIndex = 0; allPairsIndex < allPairsLength; allPairsIndex++) {
-//   findMin(allPairs)
+// for (const pair of pairs) {
+//   allPairs.push(pair[0])
+//   allPairs.push(pair[1])
 // }
 
-// let dividerIndexArray = []
+// allPairs = [...allPairs, [[2]], [[6]]]
 
-// for (let i = 0; i < sorted.length; i++) {
-//   if(JSON.stringify(sorted[i]) === '[[2]]' || JSON.stringify(sorted[i]) === '[[6]]') dividerIndexArray.push(i + 1)
+// let sorted = allPairs.sort((a, b) => compare(a, b)).reverse()
+
+// let dividersIndex = []
+
+// for (const arr of sorted) {
+//   if(JSON.stringify(arr) === '[[2]]' || JSON.stringify(arr) === '[[6]]') dividersIndex.push(sorted.indexOf(arr) + 1)
 // }
 
-// console.log(dividerIndexArray[0] * dividerIndexArray[1])
+// console.log(dividersIndex[0] * dividersIndex[1])
